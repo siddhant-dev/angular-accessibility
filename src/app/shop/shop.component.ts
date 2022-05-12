@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -23,17 +24,13 @@ import { Component, OnInit } from '@angular/core';
 export class ShopComponent implements OnInit {
   quantity = 11;
   color = 'gold';
+  fillings: string[] = ['Bok Choy & Chili Crunch', 'Tofu & Mushroom', 'Chicken & Ginger', 'Impossible Meat & Spinach'];
+  selectedFillings: string[] = [];
 
-  // TODO: #7. Create selectable controls with Angular Material
-  fillings = {
-    bokchoy: true,
-    tofu: true,
-    chicken: false,
-    impossible: false,
-  };
+
 
   // TODO: #11. Announce changes with LiveAnnouncer
-  constructor() { }
+  constructor(private liveAnnouncer: LiveAnnouncer) { }
 
   ngOnInit(): void { }
 
@@ -46,16 +43,14 @@ export class ShopComponent implements OnInit {
   }
 
   fauxPurchase(): void {
-    let flavor = '';
-
     // TODO: #7. Create selectable controls with Angular Material
-    if (this.fillings.bokchoy) { flavor += 'Bok Choy '; }
-    if (this.fillings.tofu) { flavor += 'Tofu & Mushroom '; }
-    if (this.fillings.chicken) { flavor += 'Chicken & Ginger '; }
-    if (this.fillings.impossible) { flavor += 'Impossible Meat '; }
-
+    let flavor = '';
+    this.selectedFillings.forEach(filling => {
+      flavor = flavor + " " + filling
+    })
     const fakePurchase = `Purchase ${this.quantity} ${flavor}dumplings in the color ${this.color}!`;
-    console.log(fakePurchase);
+
+    this.liveAnnouncer.announce(fakePurchase);
 
     // TODO: #11. Announce changes with LiveAnnouncer
   }

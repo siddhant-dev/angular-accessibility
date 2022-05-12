@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 @use '@angular/material' as mat;
+@import '~@angular/cdk/a11y';
 
 // TODO: #12. Enable HighContrast mode
 
@@ -101,14 +102,25 @@
   }
 }
 
-:host-context(.dark-theme) {
-  .dumpling-customizations .selection-card {
-    background-color: mat.get-color-from-palette(mat.$indigo-palette, 400);
-  }
 
+
+.purchase-button {
+    border-radius: 5px;
+    background-color: mat.get-color-from-palette(mat.$pink-palette, A100);
+
+    @include cdk-high-contrast {
+      outline: solid 1px;
+      background-color: mat.get-color-from-palette(mat.$pink-palette, 50);
+    }
+}
+
+:host-context(.dark-theme) {
   .purchase-button {
     background-color: mat.get-color-from-palette(mat.$light-green-palette, A100);
 
-    // TODO: #12. Enable HighContrast mode
+    @include cdk-high-contrast {
+      outline: solid 1px;
+      background-color: mat.get-color-from-palette(mat.$light-green-palette, 50);
+    }
   }
 }
